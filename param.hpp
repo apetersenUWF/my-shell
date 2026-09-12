@@ -20,7 +20,7 @@ class Param
 		char *outputRedirect;          /* file name or NULL            */
 		int   background;              /* either 0 (false) or 1 (true) */
 		int   argumentCount;           /* same as argc in main()       */
-		char *argumentVector[MAXARGS]; /* array of strings             */
+		char *argumentVector[MAXARGS+1]; /* array of strings             */
 		
 	public:
 		
