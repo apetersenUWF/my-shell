@@ -25,9 +25,8 @@ Param::Param()
 
 void Param::addArgument (char* newArgument)
 {
-	if (argumentCount >= (MAXARGS-1) || newArgument == NULL) return;
+	if (argumentCount >= MAXARGS || newArgument == NULL) return;
 	argumentVector[argumentCount] = newArgument;
-	argumentVector[argumentCount + 1] = NULL;
 	argumentCount++;
 }
 
