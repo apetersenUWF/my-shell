@@ -6,7 +6,7 @@ int main() {
   char* s2 = "dog\0";
   parameter.addArgument(s1);
   parameter.addArgument(s2);
-  char** args = parameter.getArguments();
+  // char** args = parameter.getArguments();
   parameter.printParams();
   return 0;
 }
