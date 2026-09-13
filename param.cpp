@@ -6,9 +6,6 @@
  *
  */
 
-#ifndef _PARAM_CPP
-#define _PARAM_CPP
-
 #include <iostream>
 #include <cstring>
 
@@ -139,5 +136,3 @@ void Param::printParams() {
 			 << "]" 
 			 << endl;
 }
-
-#endif

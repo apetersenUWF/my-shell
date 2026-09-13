@@ -1,6 +1,3 @@
-#ifndef TEST_CPP
-#define TEST_CPP
-
 #include "param.hpp"
 #include "parse.hpp"
 #include <iostream>
@@ -23,5 +20,3 @@ class Test {
      return 0;
     }
 };
-
-#endif
