@@ -3,7 +3,6 @@
 #include <iostream>
 int main() {
   Test test;
-  test.testParam();
-  test.testParser();
+  test.test();
   return 0;
 }
