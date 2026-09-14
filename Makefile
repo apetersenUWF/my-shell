@@ -1,19 +1,36 @@
 CXX = g++
-
 CXXFLAGS = -std=c++11 -Wall -g
 
-OBJS = param.o main.o parse.o
+# Object file names
+MAINDRIVER = main.o
+TESTDRIVER = test.o
+INCLUDE = param.o parse.o
 
+# Executable file names
 EXEC = run
+TEST = test
 
 TEXT_FILES =
 
-run: $(OBJS)
-				$(CXX) $(CXXFLAGS) -o $@ $(OBJS)
+# Main targets
+run: $(INCLUDE) $(MAINDRIVER)
+	$(CXX) $(CXXFLAGS) -o $@ $(INCLUDE) $(MAINDRIVER)
 
-param.o : param.cpp param.hpp
-parse.o : parse.cpp parse.hpp param.hpp
-main.o  : main.cpp test.cpp param.hpp parse.hpp
+test: $(INCLUDE) $(TESTDRIVER)
+	$(CXX) $(CXXFLAGS) -o $@ $(INCLUDE) $(TESTDRIVER)
 
-clean :
-				rm -f $(EXEC) $(TEXT_FILES) $(OBJS)
+clean:
+	rm -f $(EXEC) $(TEST) $(TEXT_FILES) $(INCLUDE) $(MAINDRIVER) $(TESTDRIVER)
+
+# Object targets
+param.o:
+	$(CXX) $(CXXFLAGS) -c param.cpp -o param.o
+
+parse.o:
+	$(CXX) $(CXXFLAGS) -c parse.cpp -o parse.o
+
+main.o:
+	$(CXX) $(CXXFLAGS) -c main.cpp -o main.o
+
+test.o:
+	$(CXX) $(CXXFLAGS) -c test.cpp -o test.o
