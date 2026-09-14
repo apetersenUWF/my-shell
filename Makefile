@@ -18,6 +18,7 @@ run: $(INCLUDE) $(MAINDRIVER)
 
 test: $(INCLUDE) $(TESTDRIVER)
 	$(CXX) $(CXXFLAGS) -o $@ $(INCLUDE) $(TESTDRIVER)
+	./$(TEST)
 
 clean:
 	rm -f $(EXEC) $(TEST) $(TEXT_FILES) $(INCLUDE) $(MAINDRIVER) $(TESTDRIVER)

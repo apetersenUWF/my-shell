@@ -4,25 +4,21 @@
 #include <cstring>
 using namespace std;
 
-class Test {
-private:
-public:
-    int test() {
-        Parser parser;
+void test_parse() {
+    Parser parser;
+    char input[1024];
+    
+    while (true) {
+        cout << "Enter a string to parse\n";
+        cout << ">>>: ";
         
-        while (true) {
-            cout << "Enter a string to parse\n";
-            cout << ">>>: ";
-            char input[1024];
-            cin.getline(input, sizeof(input));
-            Param param = parser.parse(input);
-            param.printParams();
-        }
+        cin.getline(input, 1024);
 
-        return 0;
+        Param param = parser.parse(input);
+        param.printParams();
     }
-};
+}
 
 int main() {
-    
+    test_parse();
 }

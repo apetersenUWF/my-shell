@@ -1,5 +1,6 @@
 # Object files
 *.o
 
-# Main executable
+# Executable
 run
+test
