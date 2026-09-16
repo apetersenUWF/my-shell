@@ -65,7 +65,7 @@ void Param::addArgument(const char *newArgument)
 // the compiler that each element in the return value should be immutable, and the const * tells the compiler that the returned array pointer itself should be immutable.
 // This allows us to internally keep the array stored as a char *[] so we can modify it in the methods, while preventing the caller from modifying it directly, keeping
 // everything clean and without using any weird type casting.
-const char* const * Param::getArguments()
+char* const * Param::getArguments() //this had to be changed from const char* const * to char* const* to satisfy the requirements for execvp()
 {
     if (argumentCount == 0) return nullptr;
     return argumentVector;

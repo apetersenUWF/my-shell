@@ -51,7 +51,7 @@ class Param
          * Note: 
          *   Caller must deallocate memory for the list.
          */
-        const char* const * getArguments();
+        char* const * getArguments();
     
         // getter & setter functions
         
