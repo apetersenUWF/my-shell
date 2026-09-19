@@ -14,17 +14,22 @@ bool debug = false;
 
 void redirectOutput(const char* filename) {
     if (filename == nullptr) return;
+
     if (freopen(filename, "w", stdout) == nullptr) { //freopen redirects stdout or stdin to the provided filename, upon failure it returns nullptr
-        perror("freopen failed to redirect stdin");
+        perror("freopen failed to redirect stdout");
         _exit(EXIT_FAILURE);
     }
+
+    // Learned about this online, essentially it copies stdout's file descriptor to stderr's, making stderr redirect to whatever stdout is redirected to.
+    dup2(fileno(stdout), fileno(stderr));
 }
 
 void redirectInput(const char* filename) {
     if (filename == nullptr) return;
+
     if (freopen(filename, "r", stdin) == nullptr) {
-    perror("freopen failed to redirect stdout");
-    _exit(EXIT_FAILURE);
+        perror("freopen failed to redirect");
+        _exit(EXIT_FAILURE);
     }
 }
 
@@ -52,19 +57,24 @@ int main(int argc, char *argv[]) {
 
         Param param = parser.parse(inputbuf);
         char* const * args = param.getArguments();
+
+        if (debug) param.printParams();
+
         //check first if args is empty
         if (args == nullptr || args[0] == nullptr) {
             //if empty, clean up and return to terminal
             delete[] inputbuf;
             inputbuf = nullptr;
+
             continue;
         }
+
         pid_t pid = fork(); //duplicate process and store child pid
         
         if (pid < 0) {//fork failed
             perror("Fork Failed");
-            delete[] inputbuf;
-            return -1;
+
+            // Even if the fork fails, we should continue execution. 
         }
         else if (pid == 0) {
             //Must be the child process
@@ -83,17 +93,19 @@ int main(int argc, char *argv[]) {
         }
         else {
             //Must be the parent process
-            if (param.getBackground() == 0) waitpid(pid, NULL, 0); //if this is a foreground process, wait before returning to the shell
-            else {
-                //background process
-                //can possibly track background pids in an array
-                //finish
-            }
+
+            //if this is a foreground process, wait before returning to the shell
+            if (param.getBackground() == 0) waitpid(pid, nullptr, 0);
+
+            // Otherwise, if the background flag is 1, continue execution as normal. The while(wait()) at the end of the program is what catches if a child is still running in the background when we try to exit.
         }
-        if (debug) param.printParams();
 
         delete[] inputbuf;
         inputbuf = nullptr;
     }
+
+    // Wait until all child processes have exited
+    while (wait(nullptr) > 0);
+
     return 0;
 }

@@ -2,6 +2,5 @@
 *.o
 
 # Executable
-run
+myshell
 test
-shell
